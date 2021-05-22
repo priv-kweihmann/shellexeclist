@@ -25,11 +25,11 @@ setuptools.setup(
     long_description=_long_description,
     long_description_content_type='text/markdown',
     license_files=('LICENSE',),
-    url='https://github.com/priv-kweihmann/shellistexec',
+    url='https://github.com/priv-kweihmann/shellexeclist',
     packages=setuptools.find_packages(exclude=('tests',)),
     entry_points={
         'console_scripts': [
-            'shellexeclist = shellistexec.__main__:main',
+            'shellexeclist = shellexeclist.__main__:main',
         ],
     },
     install_requires=requirements,
