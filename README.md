@@ -1,4 +1,4 @@
-# shelllistexec
+# shellexeclist
 
 List all executables called by a shell script.
 Take this tool as a package maintainer's knife to check if all needed 3rd binaries are referenced
@@ -6,7 +6,7 @@ Take this tool as a package maintainer's knife to check if all needed 3rd binari
 ## Usage
 
 ```shell
-usage: shelllistexec [-h] [--forceshell FORCESHELL] files [files ...]
+usage: shellexeclist [-h] [--forceshell FORCESHELL] files [files ...]
 
 a tool to list executables called by a shell script
 
@@ -33,7 +33,7 @@ if a not supported shell is found interpretation will fall back to *POSIX shell*
 ## Example
 
 ```shell
-shelllistexec testfiles/K01speech-dispatcher
+shellexeclist testfiles/K01speech-dispatcher
 ```
 
 returns
@@ -64,7 +64,7 @@ There's is no way to tell if a script is gracefully handling missing executables
 
 As this tool incorporates code from [bitbake](https://git.openembedded.org/bitbake) it's licensed under `GPL-2.0-only`
 
-Detailed licensing information on the incorporated code can be also found [here](shelllistexec/bb/LICENSE)
+Detailed licensing information on the incorporated code can be also found [here](shellexeclist/bb/LICENSE)
 
 ## Contribute
 

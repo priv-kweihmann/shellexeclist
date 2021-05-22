@@ -17,7 +17,7 @@ with open('requirements.txt') as f:
     requirements_dev = f.read().splitlines()
 
 setuptools.setup(
-    name='shelllistexec',
+    name='shellexeclist',
     version='1.0.0',
     author='Konrad Weihmann',
     author_email='kweihmann@outlook.com',
@@ -29,7 +29,7 @@ setuptools.setup(
     packages=setuptools.find_packages(exclude=('tests',)),
     entry_points={
         'console_scripts': [
-            'shelllistexec = shellistexec.__main__:main',
+            'shellexeclist = shellistexec.__main__:main',
         ],
     },
     install_requires=requirements,
