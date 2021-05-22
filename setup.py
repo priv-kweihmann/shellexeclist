@@ -29,7 +29,7 @@ setuptools.setup(
     packages=setuptools.find_packages(exclude=('tests',)),
     entry_points={
         'console_scripts': [
-            'shellistexec = shellistexec.__main__:main',
+            'shelllistexec = shellistexec.__main__:main',
         ],
     },
     install_requires=requirements,
