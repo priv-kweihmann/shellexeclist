@@ -13,7 +13,7 @@ class ExtendAction(argparse.Action):
 
 def create_parser():
     parser = argparse.ArgumentParser(
-        prog='shelllistexec', description='a tool to list executables called by a shell script'
+        prog='shelllistexec', description='a tool to list executables called by a shell script',
     )
     parser.register('action', 'extend', ExtendAction)
     parser.add_argument('--forceshell', default=None,
