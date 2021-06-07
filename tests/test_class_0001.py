@@ -32,7 +32,6 @@ class TestClass0001(TestBaseClass):
                 'ln', 
                 'log_daemon_msg', 
                 'log_end_msg', 
-                'set', 
                 'sh', 
                 'sleep', 
                 'start-stop-daemon', 
