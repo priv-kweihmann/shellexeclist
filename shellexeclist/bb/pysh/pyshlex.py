@@ -212,7 +212,7 @@ class WordLexer:
             raise NeedMore()
 
         chars = '$\\`"\''
-        if result[0] == '$(':
+        if result[0] in ['$(']:
             chars += ')'
         pos, sep = find_chars(buf, chars)
         if pos == -1:
@@ -229,7 +229,7 @@ class WordLexer:
         if not buf:
             raise NeedMore()
             
-        pos, sep = find_chars(buf, '$\\`"\'}')
+        pos, sep = find_chars(buf, '$\\`"\'})')
         if pos==-1:
             raise NeedMore()
             
@@ -237,6 +237,9 @@ class WordLexer:
         if sep=='}':
             result += [sep]
             return pos+1, True
+        elif sep==')':
+            result += [sep]
+            return pos+2, True
         else:
             return pos, False
             
@@ -281,11 +284,11 @@ class WordLexer:
                     result += [''] 
                 return read,True
         
-        sep = result[0]    
-        if sep=='$(':
-            parsefunc = self._parse_command
-        elif sep=='${':
+        sep = result[0]
+        if sep in ['${', '$((']:
             parsefunc = self._parse_parameter
+        elif sep in ['$(']:
+            parsefunc = self._parse_command
         else:
             raise NotImplementedError(sep)
             
