@@ -27,7 +27,6 @@ class TestClass0002(TestBaseClass):
                 '[', 
                 'dirname', 
                 'echo', 
-                'exit', 
                 'install', 
                 'ln', 
                 'log_daemon_msg', 
