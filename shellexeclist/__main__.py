@@ -1,4 +1,5 @@
 import argparse
+import logging
 
 from shellexeclist.shellident import ShellIdent
 
@@ -30,8 +31,11 @@ def parse_args():
 def run(_args):
     res = set()
     for f in _args.files:
-        for cmd in ShellIdent(f, forced_shell=_args.forceshell).RequiredBinaries:
-            res.add(cmd)
+        try:
+            for cmd in ShellIdent(f, forced_shell=_args.forceshell).RequiredBinaries:
+                res.add(cmd)
+        except Exception as e: # pragma: no cover
+            logging.exception(e) # pragma: no cover
     return sorted(res)
 
 
