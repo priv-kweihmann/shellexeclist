@@ -202,8 +202,6 @@ def p_command(p):
             p[0] = p[1]
         else:
             p[0] = ('redirect_list', RedirectList(p[1], p[2][1:]))
-    else:
-        raise NotImplementedError('%s command is not implemented' % repr(p[1][0]))
 
 def p_compound_command(p):
     """compound_command : brace_group
@@ -228,7 +226,7 @@ def p_compound_list(p):
     try:
         sep = get_production(productions, 'separator')
         if sep[1]!=';':
-            raise NotImplementedError()
+            pass
     except KeyError:
         pass
     term = get_production(productions, 'term')
@@ -259,7 +257,7 @@ def p_for_clause(p):
     try:
         items = get_production(productions, 'in')[1:]
     except KeyError:
-        raise NotImplementedError('"in" omission is not implemented')
+        items = []
         
     try:
         items = get_production(productions, 'wordlist')[1:]
@@ -391,9 +389,8 @@ def p_function_definition(p):
 def p_function_body(p):
     """function_body : compound_command
                      | compound_command redirect_list"""
-    if len(p)!=2:
-        raise NotImplementedError('functions redirections lists are not implemented')    
-    p[0] = p[1]    
+    if len(p) == 2:
+        p[0] = p[1]    
 
 def p_fname(p):
     """fname : TOKEN""" #Was NAME instead of token
@@ -635,19 +632,7 @@ def p_empty(p):
     
 # Error rule for syntax errors
 def p_error(p):
-    msg = []
-    w = msg.append
-    if p:
-        w('%r\n' % p)
-        w('followed by:\n')
-        for i in range(5):
-            n = yacc.token()
-            if not n:
-                break
-            w('  %r\n' % n)
-    else:
-        w('Unexpected EOF')
-    raise sherrors.ShellSyntaxError(''.join(msg))
+    raise sherrors.ShellSyntaxError('')
 
 # Build the parser
 try:
