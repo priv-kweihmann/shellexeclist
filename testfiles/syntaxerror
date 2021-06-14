@@ -1,0 +1,16 @@
+#! /bin/sh
+set -e
+
+do_start () {
+  PIDDIR=`dirname $PIDFILE`
+  [ -e $PIDDIR ] || install -d -ospeech-dispatcher -gaudio -m750 $PIDDIR
+  SDDIR=$PIDDIR/.speech-dispatcher
+  [ -e $SDDIR ] || ln -s $PIDDIR $SDDIR
+  LOGDIR=$SDDIR/log
+  [ -e $LOGDIR ] || ln -s /var/log/speech-dispatcher $LOGDIR
+  CACHEDIR=$SDDIR/.cache
+  [ -e $CACHEDIR ] || install -d -ospeech-dispatcher -gaudio -m750 $CACHEDIR
+  CACHEDIR2=$CACHEDIR/speech-dispatcher
+  [ -e $CACHEDIR2 ] || ln -s $SSDIR $CACHEDIR2
+  start-stop-daemon --oknodo --start --quiet --chuid $USER --pidfile $PIDFILE \
+    --exec $DAEMON -- --pid-file $PIDFILE
