@@ -11,8 +11,11 @@ class ShellParser():
         self.execs = set()
 
     def parse_shell(self, value):
-        self._parse_shell(value)
-        self.execs = set(cmd for cmd in self.allexecs if cmd not in self.funcdefs) # noqa C401
+        try:
+            self._parse_shell(value)
+        except pyshlex.NeedMore:
+            pass  # pragma: no cover
+        self.execs = set(cmd for cmd in self.allexecs if cmd not in self.funcdefs)  # noqa C401
 
         return self.execs
 
@@ -35,12 +38,12 @@ class ShellParser():
             return cmds, words
 
         def if_clause(value):
-            main = chain(value.cond, value.if_cmds) # pragma: no cover
-            rest = value.else_cmds # pragma: no cover
-            if isinstance(rest, tuple) and rest[0] == 'elif': # pragma: no cover
-                return chain(main, if_clause(rest[1])) # pragma: no cover
-            else: # pragma: no cover
-                return chain(main, rest) # pragma: no cover
+            main = chain(value.cond, value.if_cmds)  # pragma: no cover
+            rest = value.else_cmds  # pragma: no cover
+            if isinstance(rest, tuple) and rest[0] == 'elif':  # pragma: no cover
+                return chain(main, if_clause(rest[1]))  # pragma: no cover
+            else:  # pragma: no cover
+                return chain(main, rest)  # pragma: no cover
 
         def simple_command(value):
             return None, chain(value.words, (assign[1] for assign in value.assigns))
@@ -69,7 +72,7 @@ class ShellParser():
                 name, value = token
                 try:
                     more_tokens, words = token_handlers[name](value)
-                except KeyError: # pragma: no cover
+                except KeyError:  # pragma: no cover
                     raise NotImplementedError('Unsupported token type ' + name)
 
                 if more_tokens:
@@ -92,24 +95,25 @@ class ShellParser():
                     command = pyshlex.wordtree_as_string(part[1:-1])
                     self._parse_shell(command)
 
-                    if word[0] in ('cmd_name', 'cmd_word'): # pragma: no cover
-                        if word in words: # pragma: no cover
+                    if word[0] in ('cmd_name', 'cmd_word'):  # pragma: no cover
+                        if word in words:  # pragma: no cover
                             words.remove(word)
 
         usetoken = False
         for word in words:
             if word[0] in ('cmd_name', 'cmd_word') or \
-               (usetoken and word[0] == 'TOKEN'): # noqa N400
+               (usetoken and word[0] == 'TOKEN'):  # noqa N400
                 if '=' in word[1]:
                     usetoken = True
                     continue
 
                 cmd = word[1]
                 if cmd.startswith('$'):
-                    pass # pragma: no cover
+                    pass  # pragma: no cover
                 elif cmd == 'eval':
-                    command = ' '.join(word for _, word in words[1:]) # pragma: no cover
-                    self._parse_shell(command) # pragma: no cover
+                    command = ' '.join(
+                        word for _, word in words[1:])  # pragma: no cover
+                    self._parse_shell(command)  # pragma: no cover
                 else:
                     self.allexecs.add(cmd)
                 break
