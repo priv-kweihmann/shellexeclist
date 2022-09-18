@@ -18,10 +18,10 @@ with open('requirements-dev.txt') as f:
 
 setuptools.setup(
     name='shellexeclist',
-    version='1.7.1',
+    version='1.7.2',
     author='Konrad Weihmann',
     author_email='kweihmann@outlook.com',
-    description='SCA automation bot',
+    description='list all executables called by a shell script',
     long_description=_long_description,
     long_description_content_type='text/markdown',
     license_files=('LICENSE',),
@@ -51,5 +51,5 @@ setuptools.setup(
         'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Quality Assurance',
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.7',
 )
