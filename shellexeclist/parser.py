@@ -24,7 +24,7 @@ class ShellParser():
 
         self.process_tokens(tokens)
 
-    def process_tokens(self, tokens):
+    def process_tokens(self, tokens):  # noqa: CFQ004
         def function_definition(value):
             self.funcdefs.add(value.name)
             return [value.body], None
