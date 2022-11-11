@@ -18,7 +18,7 @@ with open('requirements-dev.txt') as f:
 
 setuptools.setup(
     name='shellexeclist',
-    version='1.8.0',
+    version='1.8.1',
     author='Konrad Weihmann',
     author_email='kweihmann@outlook.com',
     description='list all executables called by a shell script',
