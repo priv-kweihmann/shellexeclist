@@ -23,17 +23,19 @@ jobs:
       uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python-version }}
+        cache: 'pip'
     - name: prepare
       run: |
-        python3 -m pip install --upgrade pip build
-        pip install --upgrade setuptools 
-        pip install -r requirements.txt
-        pip install -r requirements-dev.txt
-    - name: lint (flake8)
+        python3 -m pip install --upgrade pip
+        pip install .[dev]
+    - name: linter (flake8)
       run: flake8
     - name: test (pytest)
-      run: pytest
-      shell: bash
+      run: |
+        if [ "${{ matrix.python-version }}" = "3.12" ]; then
+          export COVERAGE_CORE=sysmon
+        fi
+        pytest
     - name: build
       run: python3 -m build --sdist --wheel
     - name: install
@@ -43,4 +45,3 @@ jobs:
         shellexeclist --help
         tar -tvf dist/shellexeclist-*.tar.gz | grep LICENSE
         tar -tvf dist/shellexeclist-*.tar.gz | grep README.md
-      shell: bash
