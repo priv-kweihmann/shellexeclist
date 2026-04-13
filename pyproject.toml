@@ -71,7 +71,7 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
 ]
 dependencies = [
-  "chardet ~= 7.0",
+  "chardet ~= 7.4",
   "ply == 3.11"
 ]
 dynamic = ["optional-dependencies"]
